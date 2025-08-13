@@ -18,7 +18,15 @@ const InstitutionSchema = new mongoose.Schema(
         'University',
         'College',
         'Technical Institute',
+        'Technical College', // Added for technical training institutions
         'Vocational Center',
+        'Vocational Institute', // Added for specialized vocational training
+        'Business College', // Added for business-focused institutions
+        'Security Training Institute', // Added for security training
+        'Hospitality College', // Added for hospitality training
+        'Driving School', // Added for driving instruction
+        'Agricultural College', // Added for agricultural training
+        'Community College', // Added for community-based training
         'Other',
       ],
     },
@@ -70,6 +78,7 @@ const InstitutionSchema = new mongoose.Schema(
             'Bachelors',
             'Masters',
             'Doctorate',
+            'Short Course', // Added for brief training programs
             'Other',
           ],
         },
