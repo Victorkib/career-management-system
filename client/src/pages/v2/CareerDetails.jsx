@@ -20,12 +20,14 @@ import {
   Tooltip,
   message,
   Avatar,
+  Modal,
+  Spin,
 } from 'antd';
 import {
   BookOutlined,
   BookFilled,
   ShareAltOutlined,
-  PrinterOutlined,
+  DownloadOutlined, // Changed from PrinterOutlined to DownloadOutlined
   ArrowLeftOutlined,
   InfoCircleOutlined,
   CheckCircleOutlined,
@@ -36,6 +38,10 @@ import {
   TeamOutlined,
   LinkOutlined,
   ClockCircleOutlined,
+  FilePdfOutlined,
+  FileWordOutlined,
+  FileTextOutlined,
+  FileExcelOutlined,
 } from '@ant-design/icons';
 import {
   GraduationCap,
@@ -60,6 +66,8 @@ const CareerDetails = () => {
 
   // State for saved status
   const [isSaved, setIsSaved] = useState(false);
+  const [downloadModalVisible, setDownloadModalVisible] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
   // Fetch career details from API. The backend will now include match/reasons if applicable.
   const {
@@ -89,11 +97,1113 @@ const CareerDetails = () => {
     );
   };
 
-  // Handle print career
-  const handlePrintCareer = () => {
-    messageApi.info(
-      'This feature would allow printing this career information.'
-    );
+  const handleDownloadCareer = () => {
+    setDownloadModalVisible(true);
+  };
+
+  const downloadAsPDF = async () => {
+    setDownloading(true);
+    try {
+      // Get current theme
+      const isDarkMode = document.documentElement.classList.contains('dark');
+
+      // Create professional PDF content with theme awareness
+      const pdfContent = generateProfessionalPDFContent(career, isDarkMode);
+
+      // Create blob and download
+      const blob = new Blob([pdfContent], { type: 'text/html' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${career.title.replace(
+        /\s+/g,
+        '_'
+      )}_Professional_Career_Guide.html`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      messageApi.success('Professional career guide downloaded successfully!');
+      setDownloadModalVisible(false);
+    } catch (error) {
+      messageApi.error('Failed to download career guide');
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  const downloadAsExcel = async () => {
+    setDownloading(true);
+    try {
+      const excelContent = generateExcelContent(career);
+      const blob = new Blob([excelContent], {
+        type: 'application/vnd.ms-excel',
+      });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${career.title.replace(/\s+/g, '_')}_Career_Data.xls`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      messageApi.success('Career data downloaded as Excel file!');
+      setDownloadModalVisible(false);
+    } catch (error) {
+      messageApi.error('Failed to download Excel file');
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  const downloadAsWord = async () => {
+    setDownloading(true);
+    try {
+      const wordContent = generateWordContent(career);
+      const blob = new Blob([wordContent], { type: 'application/msword' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${career.title.replace(/\s+/g, '_')}_Career_Guide.doc`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      messageApi.success('Career guide downloaded as Word document!');
+      setDownloadModalVisible(false);
+    } catch (error) {
+      messageApi.error('Failed to download Word document');
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  const downloadAsText = async () => {
+    setDownloading(true);
+    try {
+      const textContent = generateTextContent(career);
+      const blob = new Blob([textContent], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${career.title.replace(/\s+/g, '_')}_Career_Guide.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      messageApi.success('Career guide downloaded as text file!');
+      setDownloadModalVisible(false);
+    } catch (error) {
+      messageApi.error('Failed to download text file');
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  const generateProfessionalPDFContent = (career, isDarkMode = false) => {
+    const theme = {
+      bg: isDarkMode ? '#1f1f1f' : '#ffffff',
+      text: isDarkMode ? '#ffffff' : '#333333',
+      primary: isDarkMode ? '#4096ff' : '#1890ff',
+      secondary: isDarkMode ? '#722ed1' : '#531dab',
+      accent: isDarkMode ? '#13c2c2' : '#08979c',
+      border: isDarkMode ? '#434343' : '#d9d9d9',
+      cardBg: isDarkMode ? '#262626' : '#fafafa',
+      headerBg: isDarkMode ? '#141414' : '#f0f9ff',
+      successBg: isDarkMode ? '#162312' : '#f6ffed',
+      warningBg: isDarkMode ? '#2b1d16' : '#fffbe6',
+    };
+
+    return `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>${career.title} - Professional Career Guide</title>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: ${theme.bg};
+            color: ${theme.text};
+            line-height: 1.7;
+            font-size: 14px;
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+        
+        .document-container {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: ${theme.bg};
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, ${theme.primary}, ${
+      theme.secondary
+    });
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header .subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .match-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 12px 24px;
+            border-radius: 50px;
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            page-break-inside: avoid;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid ${theme.primary};
+            position: relative;
+        }
+        
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, ${theme.primary}, ${
+      theme.accent
+    });
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: ${theme.primary};
+            margin: 0;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 25px 0;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .card {
+            background: ${theme.cardBg};
+            border: 1px solid ${theme.border};
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, ${theme.primary}, ${
+      theme.accent
+    });
+        }
+        
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: ${theme.primary};
+        }
+        
+        .salary-card {
+            text-align: center;
+            background: ${theme.successBg};
+            border: 2px solid ${theme.accent};
+        }
+        
+        .salary-amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: ${theme.accent};
+            margin: 10px 0;
+        }
+        
+        .institution-card {
+            border-left: 5px solid ${theme.secondary};
+            background: ${theme.headerBg};
+        }
+        
+        .career-level-card {
+            border-left: 5px solid ${theme.primary};
+            margin-bottom: 20px;
+        }
+        
+        .career-level-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: ${theme.primary};
+            margin-bottom: 10px;
+        }
+        
+        .career-roles {
+            background: rgba(24, 144, 255, 0.1);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        
+        .list-enhanced {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .list-enhanced li {
+            padding: 12px 0;
+            border-bottom: 1px solid ${theme.border};
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .list-enhanced li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            color: ${theme.accent};
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .list-enhanced li:last-child {
+            border-bottom: none;
+        }
+        
+        .highlight-box {
+            background: ${theme.warningBg};
+            border: 1px solid ${theme.accent};
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .highlight-box::before {
+            content: '💡';
+            position: absolute;
+            top: -15px;
+            left: 25px;
+            background: ${theme.bg};
+            padding: 5px 10px;
+            border-radius: 50%;
+            font-size: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: ${theme.cardBg};
+            border-radius: 12px;
+            border: 1px solid ${theme.border};
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: ${theme.primary};
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: ${theme.text};
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+        
+        .footer {
+            background: ${theme.cardBg};
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 1px solid ${theme.border};
+            color: ${theme.text};
+            opacity: 0.7;
+        }
+        
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: ${theme.primary};
+            margin-bottom: 10px;
+        }
+        
+        @media print {
+            body { margin: 0; padding: 0; }
+            .document-container { box-shadow: none; }
+            .section { page-break-inside: avoid; }
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: ${theme.border};
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, ${theme.primary}, ${
+      theme.accent
+    });
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <div class="header">
+            <h1>${career.title}</h1>
+            <div class="subtitle">${
+              career.category
+            } • Professional Career Guide</div>
+            ${
+              career.match
+                ? `<div class="match-badge">🎯 ${career.match}% Match Score</div>`
+                : ''
+            }
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon">📋</div>
+                    <h2 class="section-title">Career Overview</h2>
+                </div>
+                
+                <div class="highlight-box">
+                    <p style="font-size: 16px; line-height: 1.8; margin: 0;">${
+                      career.description
+                    }</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">${
+                          career.minimumMeanGrade
+                        }</span>
+                        <div class="stat-label">Min Grade</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">${
+                          career.programDuration || '4 Years'
+                        }</span>
+                        <div class="stat-label">Duration</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">${career.marketDemand}</span>
+                        <div class="stat-label">Market Demand</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">${
+                          career.institutions?.length || 0
+                        }</span>
+                        <div class="stat-label">Institutions</div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>🎯 Key Subjects</h3>
+                        <ul class="list-enhanced">
+                            ${
+                              career.keySubjects
+                                ?.map((subject) => `<li>${subject}</li>`)
+                                .join('') || '<li>No subjects listed</li>'
+                            }
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>💼 Job Prospects</h3>
+                        <ul class="list-enhanced">
+                            ${
+                              career.jobProspects
+                                ?.map((job) => `<li>${job}</li>`)
+                                .join('') || '<li>No prospects listed</li>'
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon">💰</div>
+                    <h2 class="section-title">Salary Expectations</h2>
+                </div>
+                
+                <div class="grid-3">
+                    <div class="card salary-card">
+                        <h3>Entry Level</h3>
+                        <div class="salary-amount">${
+                          career.salary?.entry || 'N/A'
+                        }</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%;"></div>
+                        </div>
+                    </div>
+                    <div class="card salary-card">
+                        <h3>Mid-Career</h3>
+                        <div class="salary-amount">${
+                          career.salary?.mid || 'N/A'
+                        }</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%;"></div>
+                        </div>
+                    </div>
+                    <div class="card salary-card">
+                        <h3>Senior Level</h3>
+                        <div class="salary-amount">${
+                          career.salary?.senior || 'N/A'
+                        }</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon">🎓</div>
+                    <h2 class="section-title">Education & Institutions</h2>
+                </div>
+                
+                <div class="highlight-box">
+                    <h3 style="margin-bottom: 15px;">📚 Entry Requirements</h3>
+                    <ul class="list-enhanced">
+                        <li>Minimum mean grade of <strong>${
+                          career.minimumMeanGrade
+                        }</strong> in KCSE</li>
+                        <li>Strong performance in key subjects: ${career.keySubjects?.join(
+                          ', '
+                        )}</li>
+                        <li>Valid KCSE Certificate</li>
+                        <li>Program Duration: ${
+                          career.programDuration || '4 Years'
+                        }</li>
+                    </ul>
+                </div>
+
+                <h3 style="margin: 30px 0 20px 0; color: ${
+                  theme.primary
+                };">🏛️ Recommended Institutions</h3>
+                <div class="grid-2">
+                    ${
+                      career.institutions
+                        ?.map(
+                          (institution) => `
+                        <div class="card institution-card">
+                            <h3>${institution.name}</h3>
+                            <p><strong>📍 Location:</strong> ${
+                              institution.location?.city
+                            }, ${institution.location?.country}</p>
+                            ${
+                              institution.website
+                                ? `<p><strong>🌐 Website:</strong> ${institution.website}</p>`
+                                : ''
+                            }
+                            ${
+                              institution.programs?.length
+                                ? `<p><strong>📚 Programs:</strong> ${institution.programs.length} available</p>`
+                                : ''
+                            }
+                        </div>
+                    `
+                        )
+                        .join('') ||
+                      '<div class="card"><p>No institutions listed</p></div>'
+                    }
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon">📈</div>
+                    <h2 class="section-title">Career Progression Path</h2>
+                </div>
+                
+                ${
+                  career.careerPath?.entryLevel
+                    ? `
+                    <div class="career-level-card card">
+                        <div class="career-level-title">🚀 Entry Level (${
+                          career.careerPath.entryLevel.experience
+                        })</div>
+                        <div class="career-roles">Typical Roles: ${career.careerPath.entryLevel.roles?.join(
+                          ', '
+                        )}</div>
+                        <p>${career.careerPath.entryLevel.description}</p>
+                    </div>
+                `
+                    : ''
+                }
+
+                ${
+                  career.careerPath?.midLevel
+                    ? `
+                    <div class="career-level-card card">
+                        <div class="career-level-title">⭐ Mid-Level (${
+                          career.careerPath.midLevel.experience
+                        })</div>
+                        <div class="career-roles">Typical Roles: ${career.careerPath.midLevel.roles?.join(
+                          ', '
+                        )}</div>
+                        <p>${career.careerPath.midLevel.description}</p>
+                    </div>
+                `
+                    : ''
+                }
+
+                ${
+                  career.careerPath?.seniorLevel
+                    ? `
+                    <div class="career-level-card card">
+                        <div class="career-level-title">🏆 Senior Level (${
+                          career.careerPath.seniorLevel.experience
+                        })</div>
+                        <div class="career-roles">Typical Roles: ${career.careerPath.seniorLevel.roles?.join(
+                          ', '
+                        )}</div>
+                        <p>${career.careerPath.seniorLevel.description}</p>
+                    </div>
+                `
+                    : ''
+                }
+
+                ${
+                  career.careerPath?.executiveLevel
+                    ? `
+                    <div class="career-level-card card">
+                        <div class="career-level-title">👑 Executive Level (${
+                          career.careerPath.executiveLevel.experience
+                        })</div>
+                        <div class="career-roles">Typical Roles: ${career.careerPath.executiveLevel.roles?.join(
+                          ', '
+                        )}</div>
+                        <p>${career.careerPath.executiveLevel.description}</p>
+                    </div>
+                `
+                    : ''
+                }
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon">🛠️</div>
+                    <h2 class="section-title">Required Skills</h2>
+                </div>
+                
+                <div class="card">
+                    <ul class="list-enhanced">
+                        ${
+                          career.skillsRequired
+                            ?.map((skill) => `<li>${skill}</li>`)
+                            .join('') || '<li>No skills listed</li>'
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            ${
+              career.match
+                ? `
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon">🎯</div>
+                        <h2 class="section-title">Why This Career Matches You</h2>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <ul class="list-enhanced">
+                            ${
+                              career.reasons
+                                ?.map((reason) => `<li>${reason}</li>`)
+                                .join('') || '<li>No reasons listed</li>'
+                            }
+                        </ul>
+                    </div>
+                </div>
+            `
+                : ''
+            }
+        </div>
+
+        <div class="footer">
+            <div class="footer-logo">Career Guidance System</div>
+            <p>Professional Career Guide • Generated on ${new Date().toLocaleDateString(
+              'en-US',
+              {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              }
+            )}</p>
+            <p style="margin-top: 10px; font-size: 12px;">This document contains comprehensive career information to guide your professional journey.</p>
+        </div>
+    </div>
+</body>
+</html>`;
+  };
+
+  const generateWordContent = (career) => {
+    return `
+${career.title} - Career Guide
+${'='.repeat(50)}
+
+Category: ${career.category}
+${career.match ? `Match Score: ${career.match}%` : ''}
+
+Description:
+${career.description}
+
+OVERVIEW
+--------
+
+Key Subjects:
+${career.keySubjects?.map((subject) => `• ${subject}`).join('\n') || ''}
+
+Job Prospects:
+${career.jobProspects?.map((job) => `• ${job}`).join('\n') || ''}
+
+Salary Expectations:
+• Entry Level: ${career.salary?.entry || 'N/A'}
+• Mid-Career: ${career.salary?.mid || 'N/A'}
+• Senior Level: ${career.salary?.senior || 'N/A'}
+
+Market Demand: ${career.marketDemand}
+
+EDUCATION REQUIREMENTS
+---------------------
+
+Minimum Entry Requirements:
+• Minimum mean grade of ${career.minimumMeanGrade} in KCSE
+• Strong performance in key subjects like ${career.keySubjects?.join(', ')}
+• KCSE Certificate
+
+Program Duration:
+• Bachelor's Degree: ${career.programDuration}
+
+Recommended Institutions:
+${
+  career.institutions
+    ?.map(
+      (institution) => `
+• ${institution.name}
+  Location: ${institution.location?.city}, ${institution.location?.country}
+  ${institution.website ? `Website: ${institution.website}` : ''}
+`
+    )
+    .join('\n') || 'No institutions listed'
+}
+
+CAREER PROGRESSION
+-----------------
+
+${
+  career.careerPath?.entryLevel
+    ? `
+Entry Level (${career.careerPath.entryLevel.experience}):
+Typical Roles: ${career.careerPath.entryLevel.roles?.join(', ')}
+${career.careerPath.entryLevel.description}
+`
+    : ''
+}
+
+${
+  career.careerPath?.midLevel
+    ? `
+Mid-Level (${career.careerPath.midLevel.experience}):
+Typical Roles: ${career.careerPath.midLevel.roles?.join(', ')}
+${career.careerPath.midLevel.description}
+`
+    : ''
+}
+
+${
+  career.careerPath?.seniorLevel
+    ? `
+Senior Level (${career.careerPath.seniorLevel.experience}):
+Typical Roles: ${career.careerPath.seniorLevel.roles?.join(', ')}
+${career.careerPath.seniorLevel.description}
+`
+    : ''
+}
+
+${
+  career.careerPath?.executiveLevel
+    ? `
+Executive Level (${career.careerPath.executiveLevel.experience}):
+Typical Roles: ${career.careerPath.executiveLevel.roles?.join(', ')}
+${career.careerPath.executiveLevel.description}
+`
+    : ''
+}
+
+REQUIRED SKILLS
+--------------
+${career.skillsRequired?.map((skill) => `• ${skill}`).join('\n') || ''}
+
+${
+  career.match
+    ? `
+WHY THIS CAREER MATCHES YOU
+--------------------------
+${career.reasons?.map((reason) => `• ${reason}`).join('\n') || ''}
+`
+    : ''
+}
+
+Generated on ${new Date().toLocaleDateString()} | Career Guidance System
+`;
+  };
+
+  const generateTextContent = (career) => {
+    return `${career.title} - Career Guide
+
+Category: ${career.category}
+${career.match ? `Match Score: ${career.match}%` : ''}
+
+Description:
+${career.description}
+
+OVERVIEW
+========
+
+Key Subjects:
+${career.keySubjects?.map((subject) => `- ${subject}`).join('\n') || ''}
+
+Job Prospects:
+${career.jobProspects?.map((job) => `- ${job}`).join('\n') || ''}
+
+Salary Expectations:
+- Entry Level: ${career.salary?.entry || 'N/A'}
+- Mid-Career: ${career.salary?.mid || 'N/A'}
+- Senior Level: ${career.salary?.senior || 'N/A'}
+
+Market Demand: ${career.marketDemand}
+
+EDUCATION REQUIREMENTS
+=====================
+
+Minimum Entry Requirements:
+- Minimum mean grade of ${career.minimumMeanGrade} in KCSE
+- Strong performance in key subjects like ${career.keySubjects?.join(', ')}
+- KCSE Certificate
+
+Program Duration:
+- Bachelor's Degree: ${career.programDuration}
+
+Recommended Institutions:
+${
+  career.institutions
+    ?.map(
+      (institution) => `
+- ${institution.name}
+  Location: ${institution.location?.city}, ${institution.location?.country}
+  ${institution.website ? `Website: ${institution.website}` : ''}
+`
+    )
+    .join('\n') || 'No institutions listed'
+}
+
+CAREER PROGRESSION
+==================
+
+${
+  career.careerPath?.entryLevel
+    ? `
+Entry Level (${career.careerPath.entryLevel.experience}):
+Typical Roles: ${career.careerPath.entryLevel.roles?.join(', ')}
+${career.careerPath.entryLevel.description}
+`
+    : ''
+}
+
+${
+  career.careerPath?.midLevel
+    ? `
+Mid-Level (${career.careerPath.midLevel.experience}):
+Typical Roles: ${career.careerPath.midLevel.roles?.join(', ')}
+${career.careerPath.midLevel.description}
+`
+    : ''
+}
+
+${
+  career.careerPath?.seniorLevel
+    ? `
+Senior Level (${career.careerPath.seniorLevel.experience}):
+Typical Roles: ${career.careerPath.seniorLevel.roles?.join(', ')}
+${career.careerPath.seniorLevel.description}
+`
+    : ''
+}
+
+${
+  career.careerPath?.executiveLevel
+    ? `
+Executive Level (${career.careerPath.executiveLevel.experience}):
+Typical Roles: ${career.careerPath.executiveLevel.roles?.join(', ')}
+${career.careerPath.executiveLevel.description}
+`
+    : ''
+}
+
+REQUIRED SKILLS
+===============
+${career.skillsRequired?.map((skill) => `- ${skill}`).join('\n') || ''}
+
+${
+  career.match
+    ? `
+WHY THIS CAREER MATCHES YOU
+===========================
+${career.reasons?.map((reason) => `- ${reason}`).join('\n') || ''}
+`
+    : ''
+}
+
+Generated on ${new Date().toLocaleDateString()} | Career Guidance System
+`;
+  };
+
+  const generateExcelContent = (career) => {
+    return `
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="ProgId" content="Excel.Sheet">
+    <meta name="Generator" content="Microsoft Excel 15">
+    <style>
+        .header { background-color: #1890ff; color: white; font-weight: bold; text-align: center; }
+        .subheader { background-color: #f0f9ff; font-weight: bold; }
+        .data { border: 1px solid #d9d9d9; }
+    </style>
+</head>
+<body>
+    <table border="1">
+        <tr class="header">
+            <td colspan="2">${career.title} - Career Data</td>
+        </tr>
+        <tr class="subheader">
+            <td>Field</td>
+            <td>Value</td>
+        </tr>
+        <tr class="data">
+            <td>Career Title</td>
+            <td>${career.title}</td>
+        </tr>
+        <tr class="data">
+            <td>Category</td>
+            <td>${career.category}</td>
+        </tr>
+        <tr class="data">
+            <td>Minimum Mean Grade</td>
+            <td>${career.minimumMeanGrade}</td>
+        </tr>
+        <tr class="data">
+            <td>Program Duration</td>
+            <td>${career.programDuration || '4 Years'}</td>
+        </tr>
+        <tr class="data">
+            <td>Market Demand</td>
+            <td>${career.marketDemand}</td>
+        </tr>
+        <tr class="data">
+            <td>Entry Level Salary</td>
+            <td>${career.salary?.entry || 'N/A'}</td>
+        </tr>
+        <tr class="data">
+            <td>Mid-Career Salary</td>
+            <td>${career.salary?.mid || 'N/A'}</td>
+        </tr>
+        <tr class="data">
+            <td>Senior Level Salary</td>
+            <td>${career.salary?.senior || 'N/A'}</td>
+        </tr>
+        ${
+          career.match
+            ? `
+        <tr class="data">
+            <td>Match Score</td>
+            <td>${career.match}%</td>
+        </tr>
+        `
+            : ''
+        }
+        <tr class="subheader">
+            <td colspan="2">Key Subjects</td>
+        </tr>
+        ${
+          career.keySubjects
+            ?.map(
+              (subject, index) => `
+        <tr class="data">
+            <td>Subject ${index + 1}</td>
+            <td>${subject}</td>
+        </tr>
+        `
+            )
+            .join('') || ''
+        }
+        <tr class="subheader">
+            <td colspan="2">Job Prospects</td>
+        </tr>
+        ${
+          career.jobProspects
+            ?.map(
+              (job, index) => `
+        <tr class="data">
+            <td>Prospect ${index + 1}</td>
+            <td>${job}</td>
+        </tr>
+        `
+            )
+            .join('') || ''
+        }
+        <tr class="subheader">
+            <td colspan="2">Required Skills</td>
+        </tr>
+        ${
+          career.skillsRequired
+            ?.map(
+              (skill, index) => `
+        <tr class="data">
+            <td>Skill ${index + 1}</td>
+            <td>${skill}</td>
+        </tr>
+        `
+            )
+            .join('') || ''
+        }
+        <tr class="subheader">
+            <td colspan="2">Institutions</td>
+        </tr>
+        ${
+          career.institutions
+            ?.map(
+              (institution, index) => `
+        <tr class="data">
+            <td>Institution ${index + 1}</td>
+            <td>${institution.name} - ${institution.location?.city}, ${
+                institution.location?.country
+              }</td>
+        </tr>
+        `
+            )
+            .join('') || ''
+        }
+    </table>
+</body>
+</html>`;
   };
 
   // Determine match color
@@ -729,16 +1839,16 @@ const CareerDetails = () => {
                   type={isSaved ? 'primary' : 'default'}
                 />
               </Tooltip>
-              <Tooltip title="Share career">
+              {/* <Tooltip title="Share career">
                 <Button
                   icon={<ShareAltOutlined />}
                   onClick={handleShareCareer}
                 />
-              </Tooltip>
-              <Tooltip title="Print information">
+              </Tooltip> */}
+              <Tooltip title="Download career guide">
                 <Button
-                  icon={<PrinterOutlined />}
-                  onClick={handlePrintCareer}
+                  icon={<DownloadOutlined />}
+                  onClick={handleDownloadCareer}
                 />
               </Tooltip>
               <Button
@@ -929,6 +2039,229 @@ const CareerDetails = () => {
           </Space>
         </Col>
       </Row>
+
+      <Modal
+        title={
+          <Space>
+            <DownloadOutlined />
+            <span
+              style={{
+                background: 'linear-gradient(135deg, #1890ff, #722ed1)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                fontWeight: 600,
+              }}
+            >
+              Download Professional Career Guide
+            </span>
+          </Space>
+        }
+        open={downloadModalVisible}
+        onCancel={() => setDownloadModalVisible(false)}
+        footer={null}
+        width={600}
+        className="download-modal"
+      >
+        <div className="py-6">
+          <Paragraph
+            className="mb-8 text-gray-600 text-center"
+            style={{ fontSize: '16px' }}
+          >
+            Choose your preferred format to download the complete professional
+            career guide for <strong>{career.title}</strong>
+          </Paragraph>
+
+          <Space direction="vertical" className="w-full" size="large">
+            <Card
+              hoverable
+              className="cursor-pointer border-2 hover:border-blue-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+              onClick={downloadAsPDF}
+              disabled={downloading}
+              style={{ borderRadius: '16px' }}
+            >
+              <div className="flex items-center justify-between">
+                <Space size="large">
+                  <Avatar
+                    icon={<FilePdfOutlined />}
+                    style={{
+                      background: 'linear-gradient(135deg, #ff4d4f, #ff7875)',
+                      color: 'white',
+                      border: '3px solid rgba(255, 77, 79, 0.2)',
+                    }}
+                    size={50}
+                  />
+                  <div>
+                    <Text
+                      strong
+                      className="text-xl"
+                      style={{ color: '#1f1f1f' }}
+                    >
+                      Professional PDF Guide
+                    </Text>
+                    <div style={{ marginTop: '4px' }}>
+                      <Text type="secondary" style={{ fontSize: '14px' }}>
+                        🎨 Theme-aware • 📊 Visual charts • 🏆 Professional
+                        layout
+                      </Text>
+                    </div>
+                  </div>
+                </Space>
+                {downloading ? (
+                  <Spin size="small" />
+                ) : (
+                  <RightOutlined style={{ color: '#1890ff' }} />
+                )}
+              </div>
+            </Card>
+
+            <Card
+              hoverable
+              className="cursor-pointer border-2 hover:border-green-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+              onClick={downloadAsExcel}
+              disabled={downloading}
+              style={{ borderRadius: '16px' }}
+            >
+              <div className="flex items-center justify-between">
+                <Space size="large">
+                  <Avatar
+                    icon={<FileExcelOutlined />}
+                    style={{
+                      background: 'linear-gradient(135deg, #52c41a, #73d13d)',
+                      color: 'white',
+                      border: '3px solid rgba(82, 196, 26, 0.2)',
+                    }}
+                    size={50}
+                  />
+                  <div>
+                    <Text
+                      strong
+                      className="text-xl"
+                      style={{ color: '#1f1f1f' }}
+                    >
+                      Excel Data Sheet
+                    </Text>
+                    <div style={{ marginTop: '4px' }}>
+                      <Text type="secondary" style={{ fontSize: '14px' }}>
+                        📈 Structured data • 🔢 Easy analysis • 📊 Spreadsheet
+                        format
+                      </Text>
+                    </div>
+                  </div>
+                </Space>
+                {downloading ? (
+                  <Spin size="small" />
+                ) : (
+                  <RightOutlined style={{ color: '#52c41a' }} />
+                )}
+              </div>
+            </Card>
+
+            <Card
+              hoverable
+              className="cursor-pointer border-2 hover:border-purple-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+              onClick={downloadAsWord}
+              disabled={downloading}
+              style={{ borderRadius: '16px' }}
+            >
+              <div className="flex items-center justify-between">
+                <Space size="large">
+                  <Avatar
+                    icon={<FileWordOutlined />}
+                    style={{
+                      background: 'linear-gradient(135deg, #1890ff, #40a9ff)',
+                      color: 'white',
+                      border: '3px solid rgba(24, 144, 255, 0.2)',
+                    }}
+                    size={50}
+                  />
+                  <div>
+                    <Text
+                      strong
+                      className="text-xl"
+                      style={{ color: '#1f1f1f' }}
+                    >
+                      Editable Word Document
+                    </Text>
+                    <div style={{ marginTop: '4px' }}>
+                      <Text type="secondary" style={{ fontSize: '14px' }}>
+                        ✏️ Fully editable • 📝 Add personal notes • 💾 Save
+                        changes
+                      </Text>
+                    </div>
+                  </div>
+                </Space>
+                {downloading ? (
+                  <Spin size="small" />
+                ) : (
+                  <RightOutlined style={{ color: '#1890ff' }} />
+                )}
+              </div>
+            </Card>
+
+            <Card
+              hoverable
+              className="cursor-pointer border-2 hover:border-orange-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+              onClick={downloadAsText}
+              disabled={downloading}
+              style={{ borderRadius: '16px' }}
+            >
+              <div className="flex items-center justify-between">
+                <Space size="large">
+                  <Avatar
+                    icon={<FileTextOutlined />}
+                    style={{
+                      background: 'linear-gradient(135deg, #fa8c16, #ffa940)',
+                      color: 'white',
+                      border: '3px solid rgba(250, 140, 22, 0.2)',
+                    }}
+                    size={50}
+                  />
+                  <div>
+                    <Text
+                      strong
+                      className="text-xl"
+                      style={{ color: '#1f1f1f' }}
+                    >
+                      Simple Text File
+                    </Text>
+                    <div style={{ marginTop: '4px' }}>
+                      <Text type="secondary" style={{ fontSize: '14px' }}>
+                        📄 Universal format • 🚀 Quick sharing • 💾 Lightweight
+                      </Text>
+                    </div>
+                  </div>
+                </Space>
+                {downloading ? (
+                  <Spin size="small" />
+                ) : (
+                  <RightOutlined style={{ color: '#fa8c16' }} />
+                )}
+              </div>
+            </Card>
+          </Space>
+
+          <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200">
+            <Space align="start">
+              <InfoCircleOutlined className="text-blue-500 text-lg mt-1" />
+              <div>
+                <Text strong className="text-blue-700 block mb-2">
+                  ✨ Enhanced Download Features
+                </Text>
+                <Text type="secondary" className="text-sm leading-relaxed">
+                  • <strong>Theme-aware styling</strong> adapts to your current
+                  light/dark mode preference
+                  <br />• <strong>Professional layouts</strong> with modern
+                  typography and visual elements
+                  <br />• <strong>Comprehensive data</strong> includes all
+                  career information, progression paths, and institutions
+                  <br />• <strong>Print-optimized</strong> formats perfect for
+                  offline reference and sharing
+                </Text>
+              </div>
+            </Space>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
