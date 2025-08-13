@@ -23,7 +23,6 @@ import {
   Badge,
   Progress,
   Empty,
-  Skeleton,
 } from 'antd';
 import {
   PlusOutlined,
@@ -552,21 +551,105 @@ const ResultsInput = () => {
 
   // Loading state
   const isLoading = userLoading || historyLoading;
+  const isSubmitting = createMutation.isPending || updateMutation.isPending;
 
   if (isLoading) {
     return (
       <div className="max-w-6xl mx-auto py-8 px-4">
-        <Skeleton active />
-        <div className="mt-6">
-          <Skeleton active />
+        <div className="flex flex-col items-center justify-center min-h-[400px] space-y-6">
+          <div className="relative">
+            {/* Outer rotating ring */}
+            <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+            {/* Inner pulsing dot */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-blue-600 rounded-full animate-pulse"></div>
+          </div>
+
+          {/* Loading text with fade animation */}
+          <div className="text-center space-y-2">
+            <h3 className="text-lg font-semibold text-gray-700 animate-pulse">
+              Loading Your Dashboard
+            </h3>
+            <p className="text-sm text-gray-500 animate-pulse">
+              Preparing your career recommendations...
+            </p>
+          </div>
+
+          {/* Progress dots */}
+          <div className="flex space-x-2">
+            <div
+              className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"
+              style={{ animationDelay: '0ms' }}
+            ></div>
+            <div
+              className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"
+              style={{ animationDelay: '150ms' }}
+            ></div>
+            <div
+              className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"
+              style={{ animationDelay: '300ms' }}
+            ></div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto py-8 px-4">
+    <div className="max-w-6xl mx-auto py-8 px-4 relative">
       {contextHolder}
+
+      {isSubmitting && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-8 shadow-2xl max-w-md w-full mx-4">
+            <div className="flex flex-col items-center space-y-6">
+              <div className="relative">
+                {/* Outer rotating ring */}
+                <div className="w-20 h-20 border-4 border-green-200 border-t-green-600 rounded-full animate-spin"></div>
+                {/* Inner pulsing dot */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-green-600 rounded-full animate-pulse"></div>
+              </div>
+
+              {/* Loading text with fade animation */}
+              <div className="text-center space-y-2">
+                <h3 className="text-xl font-semibold text-gray-800 animate-pulse">
+                  {isEditMode
+                    ? 'Updating Your Results'
+                    : 'Processing Your Results'}
+                </h3>
+                <p className="text-sm text-gray-600 animate-pulse">
+                  {isEditMode
+                    ? 'Refreshing your career recommendations...'
+                    : 'Analyzing your grades and generating personalized recommendations...'}
+                </p>
+              </div>
+
+              {/* Progress dots */}
+              <div className="flex space-x-2">
+                <div
+                  className="w-3 h-3 bg-green-600 rounded-full animate-bounce"
+                  style={{ animationDelay: '0ms' }}
+                ></div>
+                <div
+                  className="w-3 h-3 bg-green-600 rounded-full animate-bounce"
+                  style={{ animationDelay: '150ms' }}
+                ></div>
+                <div
+                  className="w-3 h-3 bg-green-600 rounded-full animate-bounce"
+                  style={{ animationDelay: '300ms' }}
+                ></div>
+              </div>
+
+              {/* Progress bar */}
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className="bg-green-600 h-2 rounded-full animate-pulse"
+                  style={{ width: '70%' }}
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="mb-8">
         <Title level={2}>
@@ -710,7 +793,7 @@ const ResultsInput = () => {
                   type="primary"
                   htmlType="submit"
                   size="large"
-                  loading={createMutation.isPending || updateMutation.isPending}
+                  disabled={isSubmitting}
                 >
                   {isEditMode ? (
                     <>
