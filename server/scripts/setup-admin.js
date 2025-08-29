@@ -14,32 +14,37 @@ const __dirname = path.dirname(__filename);
 // Load env vars from parent directory
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
+const DEFAULT_ADMIN_EMAIL = 'qinalexander56@gmail.com';
+const DEFAULT_ADMIN_PASSWORD = 'securepassword123';
+const MONGODB_URI =
+  'mongodb+srv://qinalexander56:Safaricom360@cluster0.fr14aej.mongodb.net/career_recommender?retryWrites=true&w=majority';
+
 // Function to create admin
 const createAdmin = async () => {
   try {
     // Check if required env vars exist
-    if (
-      !process.env.DEFAULT_ADMIN_EMAIL ||
-      !process.env.DEFAULT_ADMIN_PASSWORD
-    ) {
-      console.error(
-        'ERROR: DEFAULT_ADMIN_EMAIL and DEFAULT_ADMIN_PASSWORD must be set in .env file'
-      );
-      process.exit(1);
-    }
+    // if (
+    //   !DEFAULT_ADMIN_EMAIL ||
+    //   !DEFAULT_ADMIN_PASSWORD
+    // ) {
+    //   console.error(
+    //     'ERROR: DEFAULT_ADMIN_EMAIL and DEFAULT_ADMIN_PASSWORD must be set in .env file'
+    //   );
+    //   process.exit(1);
+    // }
 
     // Connect to MongoDB
-    await mongoose.connect(process.env.MONGODB_URI || process.env.MONGO_URI);
+    await mongoose.connect(MONGODB_URI);
     console.log('MongoDB Connected');
 
     // Check if admin already exists
     const existingAdmin = await User.findOne({
-      email: process.env.DEFAULT_ADMIN_EMAIL,
+      email: DEFAULT_ADMIN_EMAIL,
     });
 
     if (existingAdmin) {
       console.log(
-        `Admin user with email ${process.env.DEFAULT_ADMIN_EMAIL} already exists`
+        `Admin user with email ${DEFAULT_ADMIN_EMAIL} already exists`
       );
       process.exit(0);
     }
@@ -47,13 +52,13 @@ const createAdmin = async () => {
     // Create admin user
     // const salt = await bcrypt.genSalt(10);
     // const hashedPassword = await bcrypt.hash(
-    //   process.env.DEFAULT_ADMIN_PASSWORD,
+    //   DEFAULT_ADMIN_PASSWORD,
     //   salt
     // );
 
     const admin = await User.create({
       name: 'System Administrator',
-      email: process.env.DEFAULT_ADMIN_EMAIL,
+      email: DEFAULT_ADMIN_EMAIL,
       password: DEFAULT_ADMIN_PASSWORD,
       role: 'admin',
       userType: 'admin',

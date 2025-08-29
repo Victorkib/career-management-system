@@ -1,0 +1,1219 @@
+{results: {results: {year: 2025,…}}}
+results
+: 
+{results: {year: 2025,…}}
+results
+: 
+{year: 2025,…}
+meanGrade
+: 
+"A-"
+meanPoints
+: 
+11.25
+subjects
+: 
+[{subject: "English", grade: "A", points: 12}, {subject: "Kiswahili", grade: "A-", points: 11},…]
+0
+: 
+{subject: "English", grade: "A", points: 12}
+1
+: 
+{subject: "Kiswahili", grade: "A-", points: 11}
+2
+: 
+{subject: "Mathematics", grade: "A-", points: 11}
+3
+: 
+{subject: "Biology", grade: "A", points: 12}
+4
+: 
+{subject: "Chemistry", grade: "B+", points: 10}
+5
+: 
+{subject: "Physics", grade: "B+", points: 10}
+6
+: 
+{subject: "Geography", grade: "A", points: 12}
+7
+: 
+{subject: "Christian Religious Education", grade: "A", points: 12}
+year
+: 
+2025
+
+
+
+
+//////////////////////////////////////////
+The server response
+{
+    "success": true,
+    "mlEnhanced": true,
+    "performanceFiltered": true,
+    "studentInfo": {
+        "meanGrade": "A-",
+        "meanPoints": 11.25,
+        "strengths": [
+            "Humanities",
+            "Languages",
+            "Sciences"
+        ],
+        "performanceLevel": "EXCELLENT",
+        "eligibleTiers": [
+            "ELITE",
+            "PREMIUM",
+            "STANDARD",
+            "FOUNDATION"
+        ]
+    },
+    "recommendations": [
+        {
+            "id": "68af3cc557aad1b19b05e26a",
+            "title": "Medical Doctor",
+            "match": 93,
+            "category": "Healthcare",
+            "description": "Diagnose and treat illnesses, injuries, and other health conditions in patients through examination, testing, and prescribing medications or other treatments to promote wellness.",
+            "keySubjects": [
+                "Biology",
+                "Chemistry",
+                "Physics",
+                "Mathematics"
+            ],
+            "minimumMeanGrade": "A-",
+            "marketDemand": "Very High",
+            "salary": {
+                "entry": "60000",
+                "mid": "150000",
+                "senior": "300000"
+            },
+            "tier": "ELITE",
+            "performanceLevel": "EXCELLENT",
+            "performanceMatch": true,
+            "academicFit": 100,
+            "reasons": [
+                "Your excellent overall performance aligns perfectly with this career path.",
+                "You've studied all the key subjects required for this career: Biology, Chemistry, Physics, Mathematics.",
+                "This career has very high demand in the current job market."
+            ],
+            "tier_description": "Highly competitive, prestigious careers requiring exceptional academic performance",
+            "performance_match": 87.25,
+            "ml_enhanced_score": 100,
+            "improvement_suggestions": [],
+            "performance_level": "EXCELLENT",
+            "ml_reasons": [
+                "This career is well-suited for your excellent academic performance",
+                "Your exceptional grades qualify you for this highly competitive career path"
+            ],
+            "institutions": [
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2d5",
+                    "name": "University of Nairobi",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/xjwgjofdlxh4n89t6peo.gif",
+                    "id": "68af3cc757aad1b19b05e2d5"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2f2",
+                    "name": "Kenya Medical Training College",
+                    "type": "College",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/kmtc_logo.png",
+                    "id": "68af3cc757aad1b19b05e2f2"
+                },
+                {
+                    "location": {
+                        "city": "Nakuru"
+                    },
+                    "_id": "68af3cc757aad1b19b05e30a",
+                    "name": "Egerton University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/egerton_logo.png",
+                    "id": "68af3cc757aad1b19b05e30a"
+                },
+                {
+                    "location": {
+                        "city": "Nakuru"
+                    },
+                    "_id": "68af3cc757aad1b19b05e33b",
+                    "name": "Kabarak University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/kabarak_logo.png",
+                    "id": "68af3cc757aad1b19b05e33b"
+                }
+            ],
+            "jobProspects": [
+                "Hospitals",
+                "Private Practice",
+                "Research Institutions",
+                "Public Health Agencies",
+                "International Organizations"
+            ],
+            "improvementSuggestions": []
+        },
+        {
+            "id": "68af3cc557aad1b19b05e270",
+            "title": "Pharmacist",
+            "match": 81,
+            "category": "Healthcare",
+            "description": "Dispense prescription medications, advise patients on proper medication use, and monitor drug interactions to ensure safe and effective treatment.",
+            "keySubjects": [
+                "Chemistry",
+                "Biology",
+                "Pharmacology",
+                "Mathematics"
+            ],
+            "minimumMeanGrade": "B+",
+            "marketDemand": "High",
+            "salary": {
+                "entry": "80000",
+                "mid": "110000",
+                "senior": "140000"
+            },
+            "tier": "ELITE",
+            "performanceLevel": "EXCELLENT",
+            "performanceMatch": true,
+            "academicFit": 100,
+            "reasons": [
+                "Your excellent overall performance is well-suited for this career.",
+                "You've studied 3 of 4 key subjects for this career: Chemistry, Biology, Mathematics.",
+                "This career has high demand in the current job market."
+            ],
+            "tier_description": "Highly competitive, prestigious careers requiring exceptional academic performance",
+            "performance_match": 87.25,
+            "ml_enhanced_score": 93.85041360856835,
+            "improvement_suggestions": [],
+            "performance_level": "EXCELLENT",
+            "ml_reasons": [
+                "This career is well-suited for your excellent academic performance",
+                "Your exceptional grades qualify you for this highly competitive career path"
+            ],
+            "institutions": [
+                {
+                    "location": {
+                        "city": "Thika"
+                    },
+                    "_id": "68af3cc757aad1b19b05e329",
+                    "name": "Mount Kenya University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/mku_logo.png",
+                    "id": "68af3cc757aad1b19b05e329"
+                }
+            ],
+            "jobProspects": [
+                "Retail Pharmacies",
+                "Hospitals",
+                "Pharmaceutical Companies",
+                "Government Agencies",
+                "Research Institutions"
+            ],
+            "improvementSuggestions": []
+        },
+        {
+            "id": "68af3cc557aad1b19b05e276",
+            "title": "Dentist",
+            "match": 81,
+            "category": "Healthcare",
+            "description": "Diagnose and treat problems with patients' teeth, gums, and related parts of the mouth, providing advice and instruction on taking care of teeth and gums to prevent future problems.",
+            "keySubjects": [
+                "Biology",
+                "Chemistry",
+                "Anatomy",
+                "Physics"
+            ],
+            "minimumMeanGrade": "A-",
+            "marketDemand": "High",
+            "salary": {
+                "entry": "100000",
+                "mid": "150000",
+                "senior": "200000"
+            },
+            "tier": "ELITE",
+            "performanceLevel": "EXCELLENT",
+            "performanceMatch": true,
+            "academicFit": 100,
+            "reasons": [
+                "Your excellent overall performance is well-suited for this career.",
+                "You've studied 3 of 4 key subjects for this career: Biology, Chemistry, Physics.",
+                "This career has high demand in the current job market."
+            ],
+            "tier_description": "Highly competitive, prestigious careers requiring exceptional academic performance",
+            "performance_match": 87.25,
+            "ml_enhanced_score": 93.85041360856835,
+            "improvement_suggestions": [],
+            "performance_level": "EXCELLENT",
+            "ml_reasons": [
+                "This career is well-suited for your excellent academic performance",
+                "Your exceptional grades qualify you for this highly competitive career path"
+            ],
+            "institutions": [],
+            "jobProspects": [
+                "Private Practice",
+                "Dental Clinics",
+                "Hospitals",
+                "Public Health Services",
+                "Research Institutions"
+            ],
+            "improvementSuggestions": []
+        },
+        {
+            "id": "68af3cc557aad1b19b05e2a8",
+            "title": "Chemical Engineer",
+            "match": 81,
+            "category": "Engineering",
+            "description": "Apply principles of chemistry, biology, physics, and mathematics to design and develop processes for manufacturing chemicals, fuels, drugs, food, and many other products.",
+            "keySubjects": [
+                "Chemistry",
+                "Mathematics",
+                "Physics",
+                "Biology"
+            ],
+            "minimumMeanGrade": "B",
+            "marketDemand": "Medium",
+            "salary": {
+                "entry": "50000",
+                "mid": "80000",
+                "senior": "130000"
+            },
+            "tier": "ELITE",
+            "performanceLevel": "EXCELLENT",
+            "performanceMatch": true,
+            "academicFit": 100,
+            "reasons": [
+                "Your excellent overall performance is well-suited for this career.",
+                "You've studied all the key subjects required for this career: Chemistry, Mathematics, Physics, Biology."
+            ],
+            "tier_description": "Highly competitive, prestigious careers requiring exceptional academic performance",
+            "performance_match": 87.25,
+            "ml_enhanced_score": 93.85041360856835,
+            "improvement_suggestions": [],
+            "performance_level": "EXCELLENT",
+            "ml_reasons": [
+                "This career is well-suited for your excellent academic performance",
+                "Your exceptional grades qualify you for this highly competitive career path"
+            ],
+            "institutions": [
+                {
+                    "location": {
+                        "city": "Juja"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2e6",
+                    "name": "Jomo Kenyatta University of Agriculture and Technology",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/jkuat_logo.png",
+                    "id": "68af3cc757aad1b19b05e2e6"
+                },
+                {
+                    "location": {
+                        "city": "Nyeri"
+                    },
+                    "_id": "68af3cc757aad1b19b05e322",
+                    "name": "Dedan Kimathi University of Technology",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/dekut_logo.png",
+                    "id": "68af3cc757aad1b19b05e322"
+                },
+                {
+                    "location": {
+                        "city": "Kisumu"
+                    },
+                    "_id": "68af3cc757aad1b19b05e35b",
+                    "name": "Kisumu National Polytechnic",
+                    "type": "Technical Institute",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/kisumu_poly_logo.png",
+                    "id": "68af3cc757aad1b19b05e35b"
+                },
+                {
+                    "location": {
+                        "city": "Meru"
+                    },
+                    "_id": "68af3cc757aad1b19b05e37d",
+                    "name": "Meru National Polytechnic",
+                    "type": "Technical Institute",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/meru_poly_logo.png",
+                    "id": "68af3cc757aad1b19b05e37d"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e387",
+                    "name": "Kenya Water Institute",
+                    "type": "Technical Institute",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/kewi_logo.png",
+                    "id": "68af3cc757aad1b19b05e387"
+                },
+                {
+                    "location": {
+                        "city": "Nyeri"
+                    },
+                    "_id": "68af3cc757aad1b19b05e38c",
+                    "name": "Nyeri National Polytechnic",
+                    "type": "Technical Institute",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/nyeri_poly_logo.png",
+                    "id": "68af3cc757aad1b19b05e38c"
+                }
+            ],
+            "jobProspects": [
+                "Chemical Manufacturing",
+                "Pharmaceutical Companies",
+                "Food Processing",
+                "Energy Sector",
+                "Environmental Firms"
+            ],
+            "improvementSuggestions": []
+        },
+        {
+            "id": "68af3cc557aad1b19b05e255",
+            "title": "Software Engineer",
+            "match": 82,
+            "category": "Technology",
+            "description": "Design, develop, and maintain software systems and applications using programming languages, frameworks, and software development methodologies to solve complex problems.",
+            "keySubjects": [
+                "Computer Science",
+                "Mathematics",
+                "Physics"
+            ],
+            "minimumMeanGrade": "B",
+            "marketDemand": "Very High",
+            "salary": {
+                "entry": "40000",
+                "mid": "80000",
+                "senior": "150000"
+            },
+            "tier": "PREMIUM",
+            "performanceLevel": "EXCELLENT",
+            "performanceMatch": true,
+            "academicFit": 100,
+            "reasons": [
+                "Your excellent overall performance is well-suited for this career.",
+                "You've studied 2 of 3 key subjects for this career: Mathematics, Physics.",
+                "This career has very high demand in the current job market."
+            ],
+            "tier_description": "Professional careers requiring good academic performance",
+            "performance_match": 91.75,
+            "ml_enhanced_score": 92.80041360856835,
+            "improvement_suggestions": [],
+            "performance_level": "EXCELLENT",
+            "ml_reasons": [
+                "This career is well-suited for your excellent academic performance",
+                "Your strong academic performance makes you a competitive candidate for this professional career"
+            ],
+            "institutions": [
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2d5",
+                    "name": "University of Nairobi",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/xjwgjofdlxh4n89t6peo.gif",
+                    "id": "68af3cc757aad1b19b05e2d5"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2fb",
+                    "name": "Technical University of Kenya",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/tuk_logo.png",
+                    "id": "68af3cc757aad1b19b05e2fb"
+                },
+                {
+                    "location": {
+                        "city": "Nyeri"
+                    },
+                    "_id": "68af3cc757aad1b19b05e322",
+                    "name": "Dedan Kimathi University of Technology",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/dekut_logo.png",
+                    "id": "68af3cc757aad1b19b05e322"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e331",
+                    "name": "United States International University - Africa",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/usiu_logo.png",
+                    "id": "68af3cc757aad1b19b05e331"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e336",
+                    "name": "Multimedia University of Kenya",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/mmu_logo.png",
+                    "id": "68af3cc757aad1b19b05e336"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e367",
+                    "name": "Zetech University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/zetech_logo.png",
+                    "id": "68af3cc757aad1b19b05e367"
+                },
+                {
+                    "location": {
+                        "city": "Kerugoya"
+                    },
+                    "_id": "68af3cc757aad1b19b05e36b",
+                    "name": "Kirinyaga University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/kirinyaga_uni_logo.png",
+                    "id": "68af3cc757aad1b19b05e36b"
+                },
+                {
+                    "location": {
+                        "city": "Murang'a"
+                    },
+                    "_id": "68af3cc757aad1b19b05e371",
+                    "name": "Murang'a University of Technology",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/muranga_uni_logo.png",
+                    "id": "68af3cc757aad1b19b05e371"
+                }
+            ],
+            "jobProspects": [
+                "Tech Companies",
+                "Financial Institutions",
+                "Government Agencies",
+                "Startups",
+                "Consulting Firms"
+            ],
+            "improvementSuggestions": []
+        },
+        {
+            "id": "68af3cc557aad1b19b05e28d",
+            "title": "Actuary",
+            "match": 81,
+            "category": "Finance",
+            "description": "Actuaries analyze risk and uncertainty using mathematics, statistics, and financial theory. They help businesses and clients develop policies that minimize the cost of risk by assessing the probability of future events.",
+            "keySubjects": [
+                "Mathematics",
+                "Statistics",
+                "Economics",
+                "Physics"
+            ],
+            "minimumMeanGrade": "B+",
+            "marketDemand": "Very High",
+            "salary": {
+                "entry": "KSh 60,000 - 85,000",
+                "mid": "KSh 85,000 - 130,000",
+                "senior": "KSh 130,000 - 220,000"
+            },
+            "tier": "PREMIUM",
+            "performanceLevel": "EXCELLENT",
+            "performanceMatch": true,
+            "academicFit": 100,
+            "reasons": [
+                "Your excellent overall performance is well-suited for this career.",
+                "You've studied 2 of 4 key subjects for this career: Mathematics, Physics.",
+                "This career has very high demand in the current job market."
+            ],
+            "tier_description": "Professional careers requiring good academic performance",
+            "performance_match": 91.75,
+            "ml_enhanced_score": 92.20041360856834,
+            "improvement_suggestions": [],
+            "performance_level": "EXCELLENT",
+            "ml_reasons": [
+                "This career is well-suited for your excellent academic performance",
+                "Your strong academic performance makes you a competitive candidate for this professional career"
+            ],
+            "institutions": [
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2dd",
+                    "name": "Kenyatta University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/ku_logo.png",
+                    "id": "68af3cc757aad1b19b05e2dd"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e331",
+                    "name": "United States International University - Africa",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/usiu_logo.png",
+                    "id": "68af3cc757aad1b19b05e331"
+                },
+                {
+                    "location": {
+                        "city": "Kerugoya"
+                    },
+                    "_id": "68af3cc757aad1b19b05e36b",
+                    "name": "Kirinyaga University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/kirinyaga_uni_logo.png",
+                    "id": "68af3cc757aad1b19b05e36b"
+                }
+            ],
+            "jobProspects": [
+                "Actuarial Analyst",
+                "Risk Analyst",
+                "Senior Actuary",
+                "Actuarial Manager",
+                "Chief Actuary"
+            ],
+            "improvementSuggestions": []
+        },
+        {
+            "id": "68af3cc557aad1b19b05e281",
+            "title": "Management Consultant",
+            "match": 79,
+            "category": "Business",
+            "description": "Management consultants help organizations improve their performance by analyzing existing business problems and developing plans for improvement. They work with senior management to solve complex business challenges and implement strategic changes.",
+            "keySubjects": [
+                "Business Studies",
+                "Economics",
+                "Mathematics",
+                "English"
+            ],
+            "minimumMeanGrade": "B",
+            "marketDemand": "Very High",
+            "salary": {
+                "entry": "KSh 60,000 - 90,000",
+                "mid": "KSh 90,000 - 140,000",
+                "senior": "KSh 140,000 - 250,000"
+            },
+            "tier": "PREMIUM",
+            "performanceLevel": "EXCELLENT",
+            "performanceMatch": true,
+            "academicFit": 100,
+            "reasons": [
+                "Your excellent overall performance is well-suited for this career.",
+                "You've studied 2 of 4 key subjects for this career: Mathematics, English.",
+                "This career has very high demand in the current job market."
+            ],
+            "tier_description": "Professional careers requiring good academic performance",
+            "performance_match": 91.75,
+            "ml_enhanced_score": 91.00041360856834,
+            "improvement_suggestions": [],
+            "performance_level": "EXCELLENT",
+            "ml_reasons": [
+                "This career is well-suited for your excellent academic performance",
+                "Your strong academic performance makes you a competitive candidate for this professional career"
+            ],
+            "institutions": [
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2dd",
+                    "name": "Kenyatta University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/ku_logo.png",
+                    "id": "68af3cc757aad1b19b05e2dd"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2e1",
+                    "name": "Strathmore University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/strathmore_logo.png",
+                    "id": "68af3cc757aad1b19b05e2e1"
+                },
+                {
+                    "location": {
+                        "city": "Eldoret"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2ed",
+                    "name": "Moi University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/moi_logo.png",
+                    "id": "68af3cc757aad1b19b05e2ed"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e301",
+                    "name": "Kenya Institute of Management",
+                    "type": "College",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/kim_logo.png",
+                    "id": "68af3cc757aad1b19b05e301"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e310",
+                    "name": "Kenya School of Law",
+                    "type": "College",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/ksl_logo.png",
+                    "id": "68af3cc757aad1b19b05e310"
+                },
+                {
+                    "location": {
+                        "city": "Ruiru"
+                    },
+                    "_id": "68af3cc757aad1b19b05e31e",
+                    "name": "Nairobi Institute of Business Studies",
+                    "type": "College",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/nibs_logo.png",
+                    "id": "68af3cc757aad1b19b05e31e"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e331",
+                    "name": "United States International University - Africa",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/usiu_logo.png",
+                    "id": "68af3cc757aad1b19b05e331"
+                },
+                {
+                    "location": {
+                        "city": "Nakuru"
+                    },
+                    "_id": "68af3cc757aad1b19b05e33b",
+                    "name": "Kabarak University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/kabarak_logo.png",
+                    "id": "68af3cc757aad1b19b05e33b"
+                },
+                {
+                    "location": {
+                        "city": "Kerugoya"
+                    },
+                    "_id": "68af3cc757aad1b19b05e36b",
+                    "name": "Kirinyaga University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/kirinyaga_uni_logo.png",
+                    "id": "68af3cc757aad1b19b05e36b"
+                }
+            ],
+            "jobProspects": [
+                "Business Analyst",
+                "Strategy Consultant",
+                "Operations Consultant",
+                "Change Management Consultant",
+                "Partner/Principal"
+            ],
+            "improvementSuggestions": []
+        },
+        {
+            "id": "68af3cc557aad1b19b05e285",
+            "title": "Financial Analyst",
+            "match": 79,
+            "category": "Finance",
+            "description": "Financial analysts evaluate investment opportunities, analyze financial data, and provide recommendations to help businesses and individuals make informed financial decisions. They assess the performance of stocks, bonds, and other types of investments.",
+            "keySubjects": [
+                "Mathematics",
+                "Economics",
+                "Business Studies",
+                "English"
+            ],
+            "minimumMeanGrade": "B",
+            "marketDemand": "Very High",
+            "salary": {
+                "entry": "KSh 50,000 - 75,000",
+                "mid": "KSh 75,000 - 110,000",
+                "senior": "KSh 110,000 - 200,000"
+            },
+            "tier": "PREMIUM",
+            "performanceLevel": "EXCELLENT",
+            "performanceMatch": true,
+            "academicFit": 100,
+            "reasons": [
+                "Your excellent overall performance is well-suited for this career.",
+                "You've studied 2 of 4 key subjects for this career: Mathematics, English.",
+                "This career has very high demand in the current job market."
+            ],
+            "tier_description": "Professional careers requiring good academic performance",
+            "performance_match": 91.75,
+            "ml_enhanced_score": 91.00041360856834,
+            "improvement_suggestions": [],
+            "performance_level": "EXCELLENT",
+            "ml_reasons": [
+                "This career is well-suited for your excellent academic performance",
+                "Your strong academic performance makes you a competitive candidate for this professional career"
+            ],
+            "institutions": [
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2dd",
+                    "name": "Kenyatta University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/ku_logo.png",
+                    "id": "68af3cc757aad1b19b05e2dd"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2e1",
+                    "name": "Strathmore University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/strathmore_logo.png",
+                    "id": "68af3cc757aad1b19b05e2e1"
+                },
+                {
+                    "location": {
+                        "city": "Nakuru"
+                    },
+                    "_id": "68af3cc757aad1b19b05e30a",
+                    "name": "Egerton University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/egerton_logo.png",
+                    "id": "68af3cc757aad1b19b05e30a"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e331",
+                    "name": "United States International University - Africa",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/usiu_logo.png",
+                    "id": "68af3cc757aad1b19b05e331"
+                },
+                {
+                    "location": {
+                        "city": "Kerugoya"
+                    },
+                    "_id": "68af3cc757aad1b19b05e36b",
+                    "name": "Kirinyaga University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/kirinyaga_uni_logo.png",
+                    "id": "68af3cc757aad1b19b05e36b"
+                }
+            ],
+            "jobProspects": [
+                "Investment Analyst",
+                "Portfolio Manager",
+                "Risk Analyst",
+                "Corporate Finance Manager",
+                "Chief Financial Officer"
+            ],
+            "improvementSuggestions": []
+        },
+        {
+            "id": "68af3cc557aad1b19b05e258",
+            "title": "Data Scientist",
+            "match": 75,
+            "category": "Technology",
+            "description": "Analyze and interpret complex data sets to help organizations make better decisions through statistical analysis, machine learning, and data visualization.",
+            "keySubjects": [
+                "Statistics",
+                "Mathematics",
+                "Computer Science"
+            ],
+            "minimumMeanGrade": "B+",
+            "marketDemand": "Very High",
+            "salary": {
+                "entry": "50000",
+                "mid": "90000",
+                "senior": "160000"
+            },
+            "tier": "ELITE",
+            "performanceLevel": "EXCELLENT",
+            "performanceMatch": true,
+            "academicFit": 100,
+            "reasons": [
+                "Your excellent overall performance is well-suited for this career.",
+                "You've studied 1 of 3 key subjects for this career: Mathematics.",
+                "This career has very high demand in the current job market."
+            ],
+            "tier_description": "Highly competitive, prestigious careers requiring exceptional academic performance",
+            "performance_match": 87.25,
+            "ml_enhanced_score": 90.25041360856834,
+            "improvement_suggestions": [],
+            "performance_level": "EXCELLENT",
+            "ml_reasons": [
+                "This career is well-suited for your excellent academic performance",
+                "Your exceptional grades qualify you for this highly competitive career path"
+            ],
+            "institutions": [
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2d5",
+                    "name": "University of Nairobi",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/xjwgjofdlxh4n89t6peo.gif",
+                    "id": "68af3cc757aad1b19b05e2d5"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e331",
+                    "name": "United States International University - Africa",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/usiu_logo.png",
+                    "id": "68af3cc757aad1b19b05e331"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e336",
+                    "name": "Multimedia University of Kenya",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/mmu_logo.png",
+                    "id": "68af3cc757aad1b19b05e336"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e367",
+                    "name": "Zetech University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/zetech_logo.png",
+                    "id": "68af3cc757aad1b19b05e367"
+                },
+                {
+                    "location": {
+                        "city": "Kerugoya"
+                    },
+                    "_id": "68af3cc757aad1b19b05e36b",
+                    "name": "Kirinyaga University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/kirinyaga_uni_logo.png",
+                    "id": "68af3cc757aad1b19b05e36b"
+                },
+                {
+                    "location": {
+                        "city": "Murang'a"
+                    },
+                    "_id": "68af3cc757aad1b19b05e371",
+                    "name": "Murang'a University of Technology",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/muranga_uni_logo.png",
+                    "id": "68af3cc757aad1b19b05e371"
+                }
+            ],
+            "jobProspects": [
+                "Tech Companies",
+                "Financial Services",
+                "Healthcare",
+                "E-commerce",
+                "Research Institutions"
+            ],
+            "improvementSuggestions": []
+        },
+        {
+            "id": "68af3cc557aad1b19b05e26d",
+            "title": "Registered Nurse",
+            "match": 76,
+            "category": "Healthcare",
+            "description": "Provide and coordinate patient care, educate patients about health conditions, and provide advice and emotional support to patients and their families.",
+            "keySubjects": [
+                "Biology",
+                "Chemistry",
+                "Psychology",
+                "Anatomy"
+            ],
+            "minimumMeanGrade": "B-",
+            "marketDemand": "Very High",
+            "salary": {
+                "entry": "35000",
+                "mid": "60000",
+                "senior": "90000"
+            },
+            "tier": "PREMIUM",
+            "performanceLevel": "GOOD",
+            "performanceMatch": true,
+            "academicFit": 100,
+            "reasons": [
+                "Your excellent overall performance is well-suited for this career.",
+                "You've studied 2 of 4 key subjects for this career: Biology, Chemistry.",
+                "This career has very high demand in the current job market."
+            ],
+            "tier_description": "Professional careers requiring good academic performance",
+            "performance_match": 91.75,
+            "ml_enhanced_score": 89.20041360856834,
+            "improvement_suggestions": [],
+            "performance_level": "EXCELLENT",
+            "ml_reasons": [
+                "This career is well-suited for your excellent academic performance",
+                "Your strong academic performance makes you a competitive candidate for this professional career"
+            ],
+            "institutions": [
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2f2",
+                    "name": "Kenya Medical Training College",
+                    "type": "College",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/kmtc_logo.png",
+                    "id": "68af3cc757aad1b19b05e2f2"
+                },
+                {
+                    "location": {
+                        "city": "Kisumu"
+                    },
+                    "_id": "68af3cc757aad1b19b05e304",
+                    "name": "Maseno University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/maseno_logo.png",
+                    "id": "68af3cc757aad1b19b05e304"
+                },
+                {
+                    "location": {
+                        "city": "Nakuru"
+                    },
+                    "_id": "68af3cc757aad1b19b05e30a",
+                    "name": "Egerton University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/egerton_logo.png",
+                    "id": "68af3cc757aad1b19b05e30a"
+                },
+                {
+                    "location": {
+                        "city": "Thika"
+                    },
+                    "_id": "68af3cc757aad1b19b05e329",
+                    "name": "Mount Kenya University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/mku_logo.png",
+                    "id": "68af3cc757aad1b19b05e329"
+                }
+            ],
+            "jobProspects": [
+                "Hospitals",
+                "Clinics",
+                "Schools",
+                "Home Health Agencies",
+                "Long-term Care Facilities"
+            ],
+            "improvementSuggestions": []
+        },
+        {
+            "id": "68af3cc557aad1b19b05e289",
+            "title": "Investment Banker",
+            "match": 76,
+            "category": "Finance",
+            "description": "Investment bankers help corporations, governments, and other entities raise capital by underwriting and issuing securities. They also provide advisory services for mergers, acquisitions, and other financial transactions.",
+            "keySubjects": [
+                "Mathematics",
+                "Economics",
+                "Business Studies",
+                "English"
+            ],
+            "minimumMeanGrade": "B+",
+            "marketDemand": "High",
+            "salary": {
+                "entry": "KSh 85,000 - 150,000",
+                "mid": "KSh 150,000 - 250,000",
+                "senior": "KSh 250,000 - 500,000"
+            },
+            "tier": "PREMIUM",
+            "performanceLevel": "EXCELLENT",
+            "performanceMatch": true,
+            "academicFit": 100,
+            "reasons": [
+                "Your excellent overall performance is well-suited for this career.",
+                "You've studied 2 of 4 key subjects for this career: Mathematics, English.",
+                "This career has high demand in the current job market."
+            ],
+            "tier_description": "Professional careers requiring good academic performance",
+            "performance_match": 91.75,
+            "ml_enhanced_score": 89.20041360856834,
+            "improvement_suggestions": [],
+            "performance_level": "EXCELLENT",
+            "ml_reasons": [
+                "This career is well-suited for your excellent academic performance",
+                "Your strong academic performance makes you a competitive candidate for this professional career"
+            ],
+            "institutions": [
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2dd",
+                    "name": "Kenyatta University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/ku_logo.png",
+                    "id": "68af3cc757aad1b19b05e2dd"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e2e1",
+                    "name": "Strathmore University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/strathmore_logo.png",
+                    "id": "68af3cc757aad1b19b05e2e1"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e310",
+                    "name": "Kenya School of Law",
+                    "type": "College",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/ksl_logo.png",
+                    "id": "68af3cc757aad1b19b05e310"
+                },
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e331",
+                    "name": "United States International University - Africa",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/usiu_logo.png",
+                    "id": "68af3cc757aad1b19b05e331"
+                },
+                {
+                    "location": {
+                        "city": "Nakuru"
+                    },
+                    "_id": "68af3cc757aad1b19b05e33b",
+                    "name": "Kabarak University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/kabarak_logo.png",
+                    "id": "68af3cc757aad1b19b05e33b"
+                },
+                {
+                    "location": {
+                        "city": "Kerugoya"
+                    },
+                    "_id": "68af3cc757aad1b19b05e36b",
+                    "name": "Kirinyaga University",
+                    "type": "University",
+                    "logo": "https://res.cloudinary.com/victorkib/image/upload/v1743416482/institutions/kirinyaga_uni_logo.png",
+                    "id": "68af3cc757aad1b19b05e36b"
+                }
+            ],
+            "jobProspects": [
+                "Investment Banking Analyst",
+                "Investment Banking Associate",
+                "Vice President",
+                "Director",
+                "Managing Director"
+            ],
+            "improvementSuggestions": []
+        },
+        {
+            "id": "68af3cc557aad1b19b05e2b6",
+            "title": "Street Vendor",
+            "match": 80,
+            "category": "Business",
+            "description": "Sell goods and services on the street or in informal markets, managing small-scale trading operations and contributing to local commerce.",
+            "keySubjects": [
+                "Mathematics",
+                "English"
+            ],
+            "minimumMeanGrade": "D-",
+            "marketDemand": "Very High",
+            "salary": {
+                "entry": "8000",
+                "mid": "18000",
+                "senior": "35000"
+            },
+            "tier": "FOUNDATION",
+            "performanceLevel": "BASIC",
+            "performanceMatch": true,
+            "academicFit": 100,
+            "reasons": [
+                "Your excellent overall performance is well-suited for this career.",
+                "You've studied all the key subjects required for this career: Mathematics, English.",
+                "This career has very high demand in the current job market."
+            ],
+            "tier_description": "Entry-level careers and skilled trades",
+            "performance_match": 100,
+            "ml_enhanced_score": 89.07541360856834,
+            "improvement_suggestions": [],
+            "performance_level": "EXCELLENT",
+            "ml_reasons": [
+                "This career is well-suited for your excellent academic performance"
+            ],
+            "institutions": [
+                {
+                    "location": {
+                        "city": "Nairobi"
+                    },
+                    "_id": "68af3cc757aad1b19b05e3e0",
+                    "name": "Eastlands Skills Development Center",
+                    "type": "Community College",
+                    "logo": "https://res.cloudinary.com/example/image/upload/institutions/esdc_logo.png",
+                    "id": "68af3cc757aad1b19b05e3e0"
+                }
+            ],
+            "jobProspects": [
+                "Informal Markets",
+                "Street Trading",
+                "Mobile Vendors",
+                "Market Stalls",
+                "Self Employment"
+            ],
+            "improvementSuggestions": []
+        }
+    ],
+    "performanceInsights": {
+        "performanceLevel": "EXCELLENT",
+        "meanPoints": 11.25,
+        "eligibleTiers": [
+            "ELITE",
+            "PREMIUM",
+            "STANDARD",
+            "FOUNDATION"
+        ],
+        "strengthAreas": [
+            "Humanities",
+            "Languages",
+            "Sciences"
+        ],
+        "recommendations": {
+            "totalShown": 12,
+            "byTier": {
+                "ELITE": 5,
+                "PREMIUM": 6,
+                "FOUNDATION": 1
+            }
+        },
+        "motivationalMessage": "Outstanding academic performance! You're eligible for the most competitive career paths and top-tier institutions.",
+        "nextSteps": [
+            "Apply to top-tier universities and competitive programs",
+            "Consider leadership roles and extracurricular activities",
+            "Explore research opportunities and internships",
+            "Network with professionals in your field of interest"
+        ],
+        "improvementAreas": []
+    },
+    "recommendationsSummary": {
+        "student_performance_level": "EXCELLENT",
+        "eligible_career_tiers": [
+            "ELITE",
+            "PREMIUM",
+            "STANDARD",
+            "FOUNDATION"
+        ],
+        "total_recommended_careers": 25,
+        "tier_distribution": {
+            "ELITE": 9,
+            "PREMIUM": 7,
+            "FOUNDATION": 8,
+            "STANDARD": 1
+        },
+        "personalized_message": "Congratulations! With your exceptional performance (11.2 points), you're eligible for the most competitive and prestigious career paths including Medicine, Engineering, and Law."
+    }
+}

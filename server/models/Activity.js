@@ -29,6 +29,8 @@ const ActivitySchema = new mongoose.Schema(
         'admin_action',
         'admin_invitation_sent',
         'admin_invitation_accepted',
+        'performance_aware_recommendations',
+        'update_performance_aware_recommendations',
       ],
     },
     details: {

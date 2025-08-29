@@ -6,7 +6,7 @@ import os
 import sys
 import logging
 from datetime import datetime
-from ml_integration_service import MLIntegrationService
+from enhanced_ml_integration_service import EnhancedMLIntegrationService
 
 def setup_logging():
     """Setup logging configuration"""
@@ -30,7 +30,7 @@ def main():
     
     try:
         # Initialize ML service
-        service = MLIntegrationService()
+        service = EnhancedMLIntegrationService()
         
         # Train models
         result = service.train_models()

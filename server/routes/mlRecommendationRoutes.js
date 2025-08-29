@@ -2,7 +2,9 @@ import express from 'express';
 import { protect } from '../middleware/auth.js';
 import {
   generateMLEnhancedRecommendations,
-  updateMLEnhancedRecommendations, // Added this line
+  generatePerformanceAwareRecommendations,
+  getPerformanceAppropriateCareers,
+  updateMLEnhancedRecommendations,
   getSimilarCareers,
   getCareerTrends,
   getMLSystemHealth,
@@ -10,9 +12,13 @@ import {
 
 const router = express.Router();
 
-// ML-enhanced recommendations
-router.post('/ml-enhanced', protect, generateMLEnhancedRecommendations);
-router.put('/ml-enhanced/:id', protect, updateMLEnhancedRecommendations); // Added this route
+// Performance-aware ML recommendations
+router.post('/ml-enhanced', protect, generatePerformanceAwareRecommendations);
+router.get('/appropriate-careers', protect, getPerformanceAppropriateCareers);
+
+// Original ML-enhanced recommendations
+router.post('/performance-aware', protect, generateMLEnhancedRecommendations); //originally was ml-enhanced
+router.put('/ml-enhanced/:id', protect, updateMLEnhancedRecommendations);
 
 // Get similar careers
 router.get('/similar/:careerId', getSimilarCareers);

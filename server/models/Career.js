@@ -61,6 +61,22 @@ const CareerSchema = new mongoose.Schema(
       enum: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'E'],
       required: [true, 'Please provide a minimum mean grade'],
     },
+    tier: {
+      type: String,
+      enum: ['ELITE', 'PREMIUM', 'STANDARD', 'FOUNDATION'],
+      required: [true, 'Please provide a career tier'],
+    },
+    performanceLevel: {
+      type: String,
+      enum: ['EXCELLENT', 'GOOD', 'AVERAGE', 'BASIC'],
+      required: [true, 'Please provide a performance level'],
+    },
+    academicRequirementScore: {
+      type: Number,
+      min: 1,
+      max: 12,
+      required: [true, 'Please provide an academic requirement score'],
+    },
     marketDemand: {
       type: String,
       enum: ['Very High', 'High', 'Medium', 'Low', 'Moderate'],

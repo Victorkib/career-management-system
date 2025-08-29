@@ -20,6 +20,21 @@ const RecommendationSchema = new mongoose.Schema(
       ],
     },
     strengths: [String],
+    performanceLevel: {
+      type: String,
+      enum: ['EXCELLENT', 'GOOD', 'AVERAGE', 'BASIC', 'BELOW_AVERAGE'],
+    },
+    eligibleTiers: {
+      type: [String],
+      enum: ['ELITE', 'PREMIUM', 'STANDARD', 'FOUNDATION'],
+      default: [],
+    },
+    performanceInsights: {
+      message: String,
+      motivationalQuote: String,
+      nextSteps: [String],
+      improvementAreas: [String],
+    },
     recommendations: [
       {
         career: {
@@ -59,6 +74,19 @@ const RecommendationSchema = new mongoose.Schema(
         improvementSuggestions: {
           type: [String],
           default: [],
+        },
+        tier: {
+          type: String,
+          enum: ['ELITE', 'PREMIUM', 'STANDARD', 'FOUNDATION'],
+        },
+        performanceMatch: {
+          type: Boolean,
+          default: true,
+        },
+        academicFit: {
+          type: Number,
+          min: 0,
+          max: 100,
         },
       },
     ],
