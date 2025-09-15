@@ -455,6 +455,15 @@ export const addProgram = async (req, res, next) => {
     institution.programs.push(programData);
     await institution.save();
 
+    // Update career documents to include this institution in their institutions array
+    if (programData.careers && programData.careers.length > 0) {
+      const Career = (await import('../models/Career.js')).default;
+      await Career.updateMany(
+        { _id: { $in: programData.careers } },
+        { $addToSet: { institutions: req.params.id } }
+      );
+    }
+
     // Log activity
     if (req.user) {
       await Activity.create({
@@ -464,6 +473,7 @@ export const addProgram = async (req, res, next) => {
           action: 'add_program',
           institutionId: req.params.id,
           programName: programData.name,
+          careersLinked: programData.careers?.length || 0,
         },
         ip: req.ip,
         userAgent: req.headers['user-agent'],
@@ -536,6 +546,10 @@ export const updateProgram = async (req, res, next) => {
       );
     }
 
+    // Get old career IDs for comparison
+    const oldCareers = institution.programs[programIndex].careers || [];
+    const newCareers = programData.careers || [];
+
     // Update program
     institution.programs[programIndex] = {
       ...institution.programs[programIndex].toObject(),
@@ -544,6 +558,28 @@ export const updateProgram = async (req, res, next) => {
     };
 
     await institution.save();
+
+    // Update career documents to reflect the changes
+    if (oldCareers.length > 0 || newCareers.length > 0) {
+      const Career = (await import('../models/Career.js')).default;
+      
+      // Remove this institution from old careers that are no longer linked
+      const careersToRemove = oldCareers.filter(careerId => !newCareers.includes(careerId));
+      if (careersToRemove.length > 0) {
+        await Career.updateMany(
+          { _id: { $in: careersToRemove } },
+          { $pull: { institutions: req.params.id } }
+        );
+      }
+
+      // Add this institution to new careers
+      if (newCareers.length > 0) {
+        await Career.updateMany(
+          { _id: { $in: newCareers } },
+          { $addToSet: { institutions: req.params.id } }
+        );
+      }
+    }
 
     // Log activity
     if (req.user) {
@@ -554,6 +590,8 @@ export const updateProgram = async (req, res, next) => {
           action: 'update_program',
           institutionId: req.params.id,
           programId: req.params.programId,
+          oldCareersCount: oldCareers.length,
+          newCareersCount: newCareers.length,
         },
         ip: req.ip,
         userAgent: req.headers['user-agent'],
@@ -594,9 +632,22 @@ export const deleteProgram = async (req, res, next) => {
       );
     }
 
+    // Get careers linked to this program before deletion
+    const programToDelete = institution.programs[programIndex];
+    const linkedCareers = programToDelete.careers || [];
+
     // Remove program
     institution.programs.splice(programIndex, 1);
     await institution.save();
+
+    // Remove this institution from the careers' institutions array
+    if (linkedCareers.length > 0) {
+      const Career = (await import('../models/Career.js')).default;
+      await Career.updateMany(
+        { _id: { $in: linkedCareers } },
+        { $pull: { institutions: req.params.id } }
+      );
+    }
 
     // Log activity
     if (req.user) {
@@ -607,6 +658,7 @@ export const deleteProgram = async (req, res, next) => {
           action: 'delete_program',
           institutionId: req.params.id,
           programId: req.params.programId,
+          careersUnlinked: linkedCareers.length,
         },
         ip: req.ip,
         userAgent: req.headers['user-agent'],
