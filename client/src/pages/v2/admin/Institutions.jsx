@@ -350,20 +350,6 @@ const InstitutionManagement = () => {
   const handleEditProgram = (institution, program) => {
     setCurrentInstitution(institution);
     setCurrentProgram(program);
-
-    // Format the data for the form
-    programForm.setFieldsValue({
-      name: program.name,
-      level: program.level,
-      duration: program.duration,
-      description: program.description,
-      tuitionFees: program.tuitionFees,
-      minimumGrade: program.entryRequirements?.minimumGrade,
-      specificSubjects: program.entryRequirements?.specificSubjects || [],
-      additionalRequirements:
-        program.entryRequirements?.additionalRequirements || [],
-    });
-
     setProgramModalVisible(true);
   };
 
@@ -375,6 +361,7 @@ const InstitutionManagement = () => {
       duration: values.duration,
       description: values.description,
       tuitionFees: values.tuitionFees,
+      careers: values.careers || [], // Include selected careers
       entryRequirements: {
         minimumGrade: values.minimumGrade,
         specificSubjects: values.specificSubjects || [],

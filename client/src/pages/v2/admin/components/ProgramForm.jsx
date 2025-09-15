@@ -1,11 +1,15 @@
 'use client';
 
-import { Modal, Form, Input, Select, Button, Divider } from 'antd';
+import { Modal, Form, Input, Select, Button, Divider, Spin, Alert } from 'antd';
 import {
   EditOutlined,
   PlusOutlined,
   MinusCircleOutlined,
+  SearchOutlined,
 } from '@ant-design/icons';
+import { useQuery } from '@tanstack/react-query';
+import { fetchCareers } from '../../../../services/api';
+import { useEffect } from 'react';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -19,6 +23,73 @@ const ProgramForm = ({
   loading,
 }) => {
   const [form] = Form.useForm();
+
+  // Fetch careers for selection
+  const {
+    data: careersResponse,
+    isLoading: careersLoading,
+    error: careersError,
+  } = useQuery({
+    queryKey: ['careers-for-program'],
+    queryFn: () => fetchCareers({ limit: 1000 }), // Get all careers for selection
+    enabled: visible, // Only fetch when modal is visible
+  });
+
+  const careers = careersResponse?.data || [];
+
+  // Sort careers alphabetically by title for better UX
+  const sortedCareers = [...careers].sort((a, b) => 
+    a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+  );
+
+  // Group careers by category for better organization
+  const careersByCategory = sortedCareers.reduce((acc, career) => {
+    const category = career.category || 'Other';
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(career);
+    return acc;
+  }, {});
+
+  // Initialize form with proper values when modal opens or program changes
+  useEffect(() => {
+    if (visible) {
+      if (currentProgram) {
+        // Edit mode - populate form with existing program data
+        form.setFieldsValue({
+          name: currentProgram.name,
+          level: currentProgram.level,
+          duration: currentProgram.duration,
+          description: currentProgram.description,
+          tuitionFees: currentProgram.tuitionFees,
+          careers: currentProgram.careers || [],
+          minimumGrade: currentProgram.entryRequirements?.minimumGrade,
+          specificSubjects: currentProgram.entryRequirements?.specificSubjects || [],
+          additionalRequirements: currentProgram.entryRequirements?.additionalRequirements || [],
+        });
+      } else {
+        // Add mode - reset form to default values
+        form.resetFields();
+        form.setFieldsValue({
+          level: 'Bachelors',
+          specificSubjects: [],
+          additionalRequirements: [],
+          careers: [],
+        });
+      }
+    }
+  }, [visible, currentProgram, form]);
+
+  // Debug logging
+  console.log('ProgramForm Debug:', {
+    visible,
+    currentProgram: currentProgram?.name,
+    careersLoading,
+    careersError,
+    careersCount: careers.length,
+    careersResponse
+  });
 
   return (
     <Modal
@@ -38,7 +109,10 @@ const ProgramForm = ({
         </div>
       }
       open={visible}
-      onCancel={onCancel}
+      onCancel={() => {
+        form.resetFields();
+        onCancel();
+      }}
       footer={null}
       width={700}
       destroyOnClose
@@ -51,16 +125,21 @@ const ProgramForm = ({
           level: 'Bachelors',
           specificSubjects: [],
           additionalRequirements: [],
+          careers: [],
         }}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Form.Item
-            name="name"
-            label="Program Name"
-            rules={[{ required: true, message: 'Please enter program name' }]}
-          >
-            <Input placeholder="e.g. Bachelor of Science in Computer Science" />
-          </Form.Item>
+        <Form.Item
+          name="name"
+          label="Program Name"
+          rules={[
+            { required: true, message: 'Please enter program name' },
+            { min: 3, message: 'Program name must be at least 3 characters' },
+            { max: 100, message: 'Program name must be less than 100 characters' }
+          ]}
+        >
+          <Input placeholder="e.g. Bachelor of Science in Computer Science" />
+        </Form.Item>
 
           <Form.Item
             name="level"
@@ -84,6 +163,8 @@ const ProgramForm = ({
             label="Duration"
             rules={[
               { required: true, message: 'Please enter program duration' },
+              { min: 2, message: 'Duration must be at least 2 characters' },
+              { max: 20, message: 'Duration must be less than 20 characters' }
             ]}
           >
             <Input placeholder="e.g. 4 years" />
@@ -100,6 +181,87 @@ const ProgramForm = ({
           rules={[{ required: true, message: 'Please enter a description' }]}
         >
           <TextArea rows={3} placeholder="Describe the program..." />
+        </Form.Item>
+
+        <Form.Item
+          name="careers"
+          label="Related Careers"
+          extra="Select the careers that this program prepares students for. Use search to find specific careers quickly."
+          rules={[
+            { required: true, message: 'Please select at least one career' },
+            { type: 'array', min: 1, message: 'Please select at least one career' }
+          ]}
+        >
+          {careersLoading ? (
+            <div className="text-center py-4">
+              <Spin size="small" />
+              <div className="mt-2 text-gray-500">Loading careers...</div>
+            </div>
+          ) : careersError ? (
+            <Alert
+              message="Error loading careers"
+              description={careersError?.message || "Please try again later"}
+              type="error"
+              size="small"
+            />
+          ) : (
+            <Select
+              mode="multiple"
+              placeholder="🔍 Search and select careers..."
+              showSearch
+              allowClear
+              maxTagCount="responsive"
+              maxTagTextLength={20}
+              filterOption={(input, option) => {
+                const searchText = input.toLowerCase();
+                const careerTitle = option?.title?.toLowerCase() || '';
+                const careerCategory = option?.category?.toLowerCase() || '';
+                const careerDescription = option?.description?.toLowerCase() || '';
+                
+                return careerTitle.includes(searchText) || 
+                       careerCategory.includes(searchText) ||
+                       careerDescription.includes(searchText);
+              }}
+              optionFilterProp="children"
+              notFoundContent={
+                <div className="text-center py-4 text-gray-500">
+                  <SearchOutlined className="text-2xl mb-2" />
+                  <div>No careers found matching your search</div>
+                  <div className="text-sm mt-1">Try a different search term</div>
+                </div>
+              }
+              dropdownRender={(menu) => (
+                <div>
+                  <div className="px-3 py-2 text-xs text-gray-500 border-b">
+                    📚 {sortedCareers.length} careers available • Grouped by category
+                  </div>
+                  {menu}
+                </div>
+              )}
+            >
+              {Object.entries(careersByCategory).map(([category, categoryCareers]) => (
+                <Select.OptGroup key={category} label={`📁 ${category} (${categoryCareers.length})`}>
+                  {categoryCareers.map((career) => (
+                    <Option 
+                      key={career._id} 
+                      value={career._id}
+                      title={career.title}
+                      category={career.category}
+                      description={career.description}
+                    >
+                      <div className="flex flex-col">
+                        <span className="font-medium">{career.title}</span>
+                        <span className="text-xs text-gray-500">
+                          {career.description?.substring(0, 60)}
+                          {career.description?.length > 60 ? '...' : ''}
+                        </span>
+                      </div>
+                    </Option>
+                  ))}
+                </Select.OptGroup>
+              ))}
+            </Select>
+          )}
         </Form.Item>
 
         <Divider orientation="left">Entry Requirements</Divider>
