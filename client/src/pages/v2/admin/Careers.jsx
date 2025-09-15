@@ -161,30 +161,75 @@ const CareerManagement = () => {
     topViewedCareers: [],
     topSavedCareers: [],
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalCareers, setTotalCareers] = useState(0);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const csvLinkRef = useRef(null);
 
-  // Fetch careers
+  // Fetch careers with pagination
   const {
-    data: careers,
+    data: careersResponse,
     isLoading,
     error: fetchError,
     refetch,
   } = useQuery({
-    queryKey: ['admin-careers'],
+    queryKey: ['admin-careers', currentPage, pageSize, searchText, filters, sortField, sortOrder],
     queryFn: async () => {
-      const response = await api.get('/careers');
-      return response.data.data;
+      const params = new URLSearchParams({
+        page: currentPage.toString(),
+        limit: pageSize.toString(),
+      });
+
+      // Add search parameter if search text exists
+      if (searchText.trim()) {
+        params.append('search', searchText.trim());
+      }
+
+      // Add sort parameters
+      if (sortField && sortOrder) {
+        const sortDirection = sortOrder === 'ascend' ? '' : '-';
+        params.append('sort', `${sortDirection}${sortField}`);
+      }
+
+      // Add filter parameters
+      if (filters.category.length > 0) {
+        filters.category.forEach(category => {
+          params.append('category', category);
+        });
+      }
+      if (filters.marketDemand.length > 0) {
+        filters.marketDemand.forEach(demand => {
+          params.append('marketDemand', demand);
+        });
+      }
+      if (filters.featured !== null) {
+        params.append('featured', filters.featured.toString());
+      }
+      if (filters.minimumMeanGrade.length > 0) {
+        filters.minimumMeanGrade.forEach(grade => {
+          params.append('minimumMeanGrade', grade);
+        });
+      }
+
+      const response = await api.get(`/careers?${params.toString()}`);
+      return response.data;
     },
     onSuccess: (data) => {
-      // Calculate statistics for analytics
-      if (data && data.length > 0) {
-        calculateCareerStats(data);
+      // Update total careers count
+      setTotalCareers(data.total || 0);
+      
+      // Calculate statistics for analytics (using all data for stats)
+      if (data.data && data.data.length > 0) {
+        calculateCareerStats(data.data);
       }
     },
   });
+
+  // Extract careers data from response
+  const careers = careersResponse?.data || [];
 
   // Fetch career analytics
   const { data: analyticsData, isLoading: analyticsLoading } = useQuery({
@@ -918,112 +963,10 @@ const CareerManagement = () => {
     XLSX.writeFile(workbook, 'career_import_template.xlsx');
   };
 
-  // Apply filters and search
-  const getFilteredCareers = () => {
-    if (!careers) return [];
-
-    return careers.filter((career) => {
-      // Text search
-      const matchesSearch =
-        career.title.toLowerCase().includes(searchText.toLowerCase()) ||
-        career.description.toLowerCase().includes(searchText.toLowerCase()) ||
-        career.category.toLowerCase().includes(searchText.toLowerCase()) ||
-        (career.skillsRequired || []).some((skill) =>
-          skill.toLowerCase().includes(searchText.toLowerCase())
-        );
-
-      // Category filter
-      const matchesCategory =
-        filters.category.length === 0 ||
-        filters.category.includes(career.category);
-
-      // Market demand filter
-      const matchesDemand =
-        filters.marketDemand.length === 0 ||
-        filters.marketDemand.includes(career.marketDemand);
-
-      // Featured filter
-      const matchesFeatured =
-        filters.featured === null || career.featured === filters.featured;
-
-      // Minimum grade filter
-      const matchesGrade =
-        filters.minimumMeanGrade.length === 0 ||
-        filters.minimumMeanGrade.includes(career.minimumMeanGrade);
-
-      // Advanced filters
-      let matchesAdvancedFilters = true;
-
-      if (advancedSearch) {
-        // Salary range filter
-        const entrySalary =
-          Number.parseFloat(career.salary?.entry?.replace(/[^0-9.]/g, '')) || 0;
-        const matchesSalaryRange =
-          entrySalary >= advancedFilters.salaryRange[0] &&
-          entrySalary <= advancedFilters.salaryRange[1];
-
-        // Skills filter
-        const matchesSkills =
-          advancedFilters.skills.length === 0 ||
-          advancedFilters.skills.some((skill) =>
-            (career.skillsRequired || []).includes(skill)
-          );
-
-        // Subjects filter
-        const matchesSubjects =
-          advancedFilters.subjects.length === 0 ||
-          advancedFilters.subjects.some((subject) =>
-            (career.keySubjects || []).includes(subject)
-          );
-
-        matchesAdvancedFilters =
-          matchesSalaryRange && matchesSkills && matchesSubjects;
-      }
-
-      return (
-        matchesSearch &&
-        matchesCategory &&
-        matchesDemand &&
-        matchesFeatured &&
-        matchesGrade &&
-        matchesAdvancedFilters
-      );
-    });
-  };
-
-  // Sort careers
+  // Since we're now doing server-side filtering and sorting,
+  // we can directly use the careers data from the API response
   const getSortedCareers = () => {
-    const filtered = getFilteredCareers();
-
-    return [...filtered].sort((a, b) => {
-      let valueA, valueB;
-
-      // Handle nested fields
-      if (sortField === 'salary') {
-        valueA =
-          Number.parseFloat(a.salary?.entry?.replace(/[^0-9.]/g, '')) || 0;
-        valueB =
-          Number.parseFloat(b.salary?.entry?.replace(/[^0-9.]/g, '')) || 0;
-      } else if (sortField === 'views') {
-        valueA = a.views || 0;
-        valueB = b.views || 0;
-      } else if (sortField === 'saves') {
-        valueA = a.saves || 0;
-        valueB = b.saves || 0;
-      } else {
-        valueA = a[sortField] || '';
-        valueB = b[sortField] || '';
-      }
-
-      // Handle string vs number comparison
-      if (typeof valueA === 'string' && typeof valueB === 'string') {
-        return sortOrder === 'ascend'
-          ? valueA.localeCompare(valueB)
-          : valueB.localeCompare(valueA);
-      } else {
-        return sortOrder === 'ascend' ? valueA - valueB : valueB - valueA;
-      }
-    });
+    return careers || [];
   };
 
   const handleSort = (field) => {
@@ -1035,6 +978,28 @@ const CareerManagement = () => {
       setSortField(field);
       setSortOrder('ascend');
     }
+    // Reset to first page when sorting changes
+    setCurrentPage(1);
+  };
+
+  // Handle pagination changes
+  const handlePageChange = (page, size) => {
+    setCurrentPage(page);
+    if (size !== pageSize) {
+      setPageSize(size);
+    }
+  };
+
+  // Handle search changes
+  const handleSearchChange = (value) => {
+    setSearchText(value);
+    setCurrentPage(1); // Reset to first page when searching
+  };
+
+  // Handle filter changes
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters);
+    setCurrentPage(1); // Reset to first page when filtering
   };
 
   const renderSortIcon = (field) => {
@@ -1468,7 +1433,7 @@ const CareerManagement = () => {
                 placeholder="Filter by category"
                 value={filters.category}
                 onChange={(values) =>
-                  setFilters({ ...filters, category: values })
+                  handleFilterChange({ ...filters, category: values })
                 }
                 maxTagCount={2}
               >
@@ -1491,7 +1456,7 @@ const CareerManagement = () => {
                 placeholder="Filter by demand"
                 value={filters.marketDemand}
                 onChange={(values) =>
-                  setFilters({ ...filters, marketDemand: values })
+                  handleFilterChange({ ...filters, marketDemand: values })
                 }
                 maxTagCount={2}
               >
@@ -1512,7 +1477,7 @@ const CareerManagement = () => {
                 placeholder="Filter by grade"
                 value={filters.minimumMeanGrade}
                 onChange={(values) =>
-                  setFilters({ ...filters, minimumMeanGrade: values })
+                  handleFilterChange({ ...filters, minimumMeanGrade: values })
                 }
                 maxTagCount={2}
               >
@@ -1533,7 +1498,7 @@ const CareerManagement = () => {
               <Radio.Group
                 value={filters.featured}
                 onChange={(e) =>
-                  setFilters({ ...filters, featured: e.target.value })
+                  handleFilterChange({ ...filters, featured: e.target.value })
                 }
                 buttonStyle="solid"
               >
@@ -1634,7 +1599,7 @@ const CareerManagement = () => {
       <div className="flex justify-end mt-4">
         <Button
           onClick={() => {
-            setFilters({
+            handleFilterChange({
               category: [],
               marketDemand: [],
               featured: null,
@@ -3220,7 +3185,7 @@ const CareerManagement = () => {
               placeholder="Search careers by title, description, category or skills..."
               prefix={<SearchOutlined />}
               value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
+              onChange={(e) => handleSearchChange(e.target.value)}
               className="max-w-md"
               allowClear
               size="large"
@@ -3323,7 +3288,7 @@ const CareerManagement = () => {
         ) : (
           <>
             <div className="mb-2 text-gray-500 text-sm">
-              {getSortedCareers().length} careers found
+              {totalCareers} careers found
             </div>
 
             {viewMode === 'table' ? (
@@ -3333,11 +3298,15 @@ const CareerManagement = () => {
                 rowKey="_id"
                 rowSelection={rowSelection}
                 pagination={{
-                  pageSize: 10,
+                  current: currentPage,
+                  pageSize: pageSize,
+                  total: totalCareers,
                   showSizeChanger: true,
                   pageSizeOptions: ['10', '20', '50'],
                   showTotal: (total, range) =>
                     `${range[0]}-${range[1]} of ${total} careers`,
+                  onChange: handlePageChange,
+                  onShowSizeChange: handlePageChange,
                 }}
                 rowClassName="hover:bg-gray-50"
                 scroll={{ x: 'max-content' }}
