@@ -821,7 +821,7 @@ const ActionButton = ({ icon, text, link }) => {
       <Card
         hoverable
         className="h-full text-center py-4"
-        bodyStyle={{ padding: '12px' }}
+        styles={{ body: { padding: '12px' } }}
       >
         <div className="flex flex-col items-center">
           <div className="mb-2">{icon}</div>

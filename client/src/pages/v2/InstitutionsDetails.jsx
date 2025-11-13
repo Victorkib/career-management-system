@@ -727,7 +727,7 @@ const InstitutionDetails = () => {
                                 key={index}
                                 size="small"
                                 className="dark:bg-gray-700 dark:border-gray-600"
-                                bodyStyle={{ padding: '12px' }}
+                                styles={{ body: { padding: '12px' } }}
                               >
                                 <div className="flex items-center">
                                   <CheckCircleOutlined className="text-green-500 mr-3 text-lg" />
@@ -1031,7 +1031,7 @@ const InstitutionDetails = () => {
                               key={index}
                               hoverable
                               className="text-center h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:bg-gray-700 dark:border-gray-600"
-                              bodyStyle={{ padding: '24px' }}
+                              styles={{ body: { padding: '24px' } }}
                             >
                               <div className="mb-4">
                                 <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-3">

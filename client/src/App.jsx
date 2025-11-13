@@ -51,6 +51,7 @@ import Layout from './components/v2/Layout';
 import AdminLayout from './components/v2/admin/AdminLayout';
 import AdminAnalytics from './pages/v2/admin/Analytics';
 import InstitutionDetails from './pages/v2/InstitutionsDetails';
+import Terms from './pages/v2/Terms';
 
 // Create a client for React Query
 const queryClient = new QueryClient({
@@ -193,6 +194,15 @@ function App() {
                       </Layout>
                     }
                   />
+                  <Route
+                    path="/terms"
+                    element={
+                      <Layout>
+                        <Terms />
+                      </Layout>
+                    }
+                  />
+                 
                   <Route
                     path="/admin/accept-invitation/:token"
                     element={<AcceptInvitation />}

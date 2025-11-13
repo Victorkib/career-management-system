@@ -316,7 +316,7 @@ const CareerCard = ({
       >
         <Card
           className="mb-4 hover:shadow-lg transition-all duration-300 border-l-4 border-l-blue-500"
-          bodyStyle={{ padding: '16px' }}
+          styles={{ body: { padding: '16px' } }}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4 flex-1">
@@ -428,7 +428,7 @@ const CareerCard = ({
               ? 'linear-gradient(135deg, #2d3748 0%, #1a202c 100%)'
               : 'linear-gradient(135deg, #ffffff 0%, #f7fafc 100%)',
         }}
-        bodyStyle={{ padding: 0 }}
+        styles={{ body: { padding: 0 } }}
         onClick={() => handleViewDetails(career._id)}
       >
         {/* Header with gradient background */}

@@ -447,7 +447,6 @@ const AdminLayout = ({ children }) => {
             placement="left"
             onClose={() => setDrawerVisible(false)}
             open={drawerVisible}
-            bodyStyle={{ padding: 0 }}
             width={250}
             styles={{
               body: {

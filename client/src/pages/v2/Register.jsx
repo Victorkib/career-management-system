@@ -280,6 +280,10 @@ const Register = () => {
                 I agree to the{' '}
                 <Link to="/terms" className="text-[#0080ff]">
                   terms and conditions
+                </Link>{' '}
+                and{' '}
+                <Link to="/privacy" className="text-[#0080ff]">
+                  privacy policy
                 </Link>
               </Checkbox>
             </Form.Item>

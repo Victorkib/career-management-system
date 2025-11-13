@@ -16,7 +16,7 @@ const StatCard = ({ title, value, icon, color, footer, change }) => {
   const selectedColor = colors[color] || colors.blue;
 
   return (
-    <Card bodyStyle={{ padding: '20px' }}>
+    <Card styles={{ body: { padding: '20px' } }}>
       <div className="flex items-center mb-2">
         <div
           className="flex items-center justify-center rounded-full mr-3"
